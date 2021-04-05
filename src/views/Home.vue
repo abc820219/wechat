@@ -57,7 +57,8 @@ header{
   }
 }
 main{
-  background-image: url('~@/assets/images/bg.jpg');
+  // background-image: url('~@/assets/images/bg.jpg');
+  background-image: url('/dist/assets/images/bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   padding:10px;
