@@ -12,6 +12,9 @@
         <b-button @click="loginHandler" variant="primary">登入</b-button>
       </b-form>
     </div>
+     <b-alert class="text-center" v-model="showDismissibleAlert" variant="danger" dismissible>
+      使用者名稱重複
+    </b-alert>
   </div>
 </template>
 
@@ -21,7 +24,8 @@ export default {
   name: 'Login',
   data(){
     return {
-      name:""
+      name:"",
+      showDismissibleAlert:false
     }
   },
   methods:{
@@ -37,7 +41,7 @@ export default {
         this.$store.commit("M_USER",obj);
         this.$router.push('/home')
         }else{
-          alert('名稱重複')
+          this.showDismissibleAlert = true
         }
       }).catch(err=>{
         console.log(err);

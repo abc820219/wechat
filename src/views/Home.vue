@@ -4,19 +4,19 @@
     <b-navbar-brand href="#">WeChat</b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav>
+      <b-navbar-nav class="d-flex align-items-center">
         <b-nav-item>在線人數:{{users.length}}人</b-nav-item>
-        <b-nav-item>位置:{{!user.room ? "大廳" : user.room}}</b-nav-item>
+        <b-nav-item class="d-flex"><b-form-select v-model="room" :options="options" size="sm"></b-form-select></b-nav-item>
       </b-navbar-nav>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-      <b-form-select v-model="room" :options="options" size="sm"></b-form-select>
+ 
       <b-nav-item-dropdown right>
         <!-- Using 'button-content' slot -->
         <template #button-content>
           <em>使用者:{{user.name}}</em>
         </template>
-        <b-dropdown-item @click="leaveHandler">Sign Out</b-dropdown-item>
+        <b-dropdown-item @click="leaveHandler">登出</b-dropdown-item>
       </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -40,9 +40,6 @@
             <b-list-group-item>在此房間人員</b-list-group-item>
             <b-list-group-item  v-for="(name,key) in usersname" :key="key">{{name}}</b-list-group-item>
           </b-list-group>
-          <b-list-group>
-            <b-list-group-item  v-for="(message,key) in playersComeLeaveMessage" :key="key">{{message}}</b-list-group-item>
-          </b-list-group>
         </div>
       </main>
   </div>
@@ -62,7 +59,7 @@ main{
   background-repeat: no-repeat;
   background-size: cover;
   padding:10px;
-  min-height: calc(100vh - 48px);
+  min-height: calc(100vh - 63px);
   display: flex;
     >div{
       flex:10%;
@@ -89,13 +86,11 @@ export default {
     return {
       message:"",
       room:"",
-      leaveList:[],
-      comeList:[],
       listContent:[],
       options: [
           { value: "", text: '大廳' },
-          { value: 'a', text: 'a' },
-          { value: 'b', text: 'b' },
+          { value: 'a', text: '房間A' },
+          { value: 'b', text: '房間B' },
         ]
     }
   },
@@ -122,19 +117,14 @@ export default {
                 room:nV,
             })
       window.socket.send(data)
-
       this.listContent = []
       this.comeList = []
       this.leaveList = [] 
-
       this.$store.commit("M_USER",{room:nV})
 
     }
   },
   computed:{
-    playersComeLeaveMessage(){
-      return [...this.comeList,...this.leaveList]
-    },
     users(){
       return this.$store.state.users
     },
@@ -171,16 +161,17 @@ export default {
               _this.listContent.push(data.message)
             }
             if(data.type == 'come'){             
-              _this.comeList.push(data.message)
+              _this.listContent.push(data.message)
+
             }
             if(data.type == 'changeIn'){             
-              _this.comeList.push(data.message)
+              _this.listContent.push(data.message)
             }
             if(data.type == 'changeOut'){             
-              _this.leaveList.push(data.message)
+              _this.listContent.push(data.message)
             }
             if(data.type == 'leave'){             
-              _this.leaveList.push(data.message)
+              _this.listContent.push(data.message)
             }
 
             if(data.length){
