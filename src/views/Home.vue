@@ -57,8 +57,8 @@ header{
   }
 }
 main{
-  // background-image: url('~@/assets/images/bg.jpg');
-  background-image: url('/dist/assets/images/bg.jpg');
+  background-image: url('~@/assets/images/bg.jpg');
+  // background-image: url('/dist/assets/images/bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   padding:10px;
@@ -154,7 +154,7 @@ export default {
   if(!this.user.name){
     this.$router.push('/')
   }
-  window.socket = new WebSocket('ws://websockewechat.herokuapp.com/', 'protocol1')
+  window.socket = new WebSocket('wss://websockewechat.herokuapp.com/', 'protocol1')
   window.socket.addEventListener('open', function () {
             let data = JSON.stringify({
                 type: 'come',
