@@ -1,0 +1,12 @@
+// Define variable defaults
+// $body-bg: #000;
+// $body-color: #111;
+
+$primary:#FB7858;
+// Then import Bootstrap an BootstrapVue SCSS files (order is important)
+.mt-xs-2{
+  margin-top: 10px;
+}
+
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import 'node_modules/bootstrap-vue/src/index.scss';
