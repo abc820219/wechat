@@ -5,11 +5,17 @@ import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
+
+
 const routes = [
   {
     path: '/',
     name:'Login',
-    component:Login
+    component:Login,
+    beforeEnter(from,to,next){
+      console.log("beforEnter");
+      next()
+    }
   },
   {
     path: '/home',
@@ -31,5 +37,14 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+
+// router.beforeEach((from,to,next)=>{
+//   console.log("beforeEach");
+//   next()
+// })
+// router.afterEach(()=>{
+//   console.log("afterEach");
+// })
 
 export default router

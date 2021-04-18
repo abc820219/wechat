@@ -21,6 +21,13 @@
 <script>
 import axios from 'axios'
 export default {
+  // beforeRouteEnter(from,to,next){
+  //   console.log("beforeRouteEnter");
+  //   next()
+  // },
+  // beforeResolve (){
+  //   console.log("beforeResolve");
+  // },
   name: 'Login',
   data(){
     return {

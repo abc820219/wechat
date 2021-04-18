@@ -5,16 +5,15 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="d-flex align-items-center">
-        <b-nav-item>在線人數:{{users.length}}人</b-nav-item>
-        <b-nav-item class="d-flex"><b-form-select v-model="room" :options="options" size="sm"></b-form-select></b-nav-item>
+        <div class="mr-3 my-3 my-md-0">在線人數:{{users.length}}人</div>
+        <div class="d-flex mb-3 mb-md-0"><b-form-select v-model="room" :options="options" size="sm"></b-form-select></div>
       </b-navbar-nav>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
- 
-      <b-nav-item-dropdown right>
+      <b-nav-item-dropdown right class="text-center">
         <!-- Using 'button-content' slot -->
         <template #button-content>
-          <em>使用者:{{user.name}}</em>
+          <em  >使用者:{{user.name}}</em>
         </template>
         <b-dropdown-item @click="leaveHandler">登出</b-dropdown-item>
       </b-nav-item-dropdown>
@@ -36,7 +35,7 @@
             ></b-form-textarea>
         </div>
         <div>
-          <b-list-group class="mb-3">
+          <b-list-group class="mb-3 d-none d-md-block">
             <b-list-group-item>在此房間人員</b-list-group-item>
             <b-list-group-item  v-for="(name,key) in usersname" :key="key">{{name}}</b-list-group-item>
           </b-list-group>
@@ -53,20 +52,27 @@ header{
     display: flex;
   }
 }
+
 main{
   background-image: url('~@/assets/images/bg.jpg');
   // background-image: url('/dist/assets/images/bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   padding:10px;
-  min-height: calc(100vh - 63px);
+  min-height: calc(100vh - 48px);
   display: flex;
     >div{
       flex:10%;
+     @media (max-width:768px){
+       flex:0% 
+      }
     }
     >div:first-child{
       position: relative;
       flex: 90%;
+      @media (max-width:768px){
+       flex:100% 
+      }``
     }
     .txtarea{
       position: absolute;
@@ -74,7 +80,8 @@ main{
       bottom: 0;
     }
     .contentArea{
-      max-height: calc(100vh - 170px);
+      background-color:#fff;
+      height: calc(100vh - 170px);
       overflow-y: scroll;
     }
 }
