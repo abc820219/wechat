@@ -1,22 +1,15 @@
 <template>
   <div class="home">
-      <header>
-          <div class="ham-menu" @click="mobileMenuIsOpen=!mobileMenuIsOpen">
-            <img src="@/assets/images/menu.png" alt="">
-          </div>
+      <header class="weChat-style">
           <h1 class="text-secondary">We Chat</h1>
           <div class='menu d-flex align-items-center'>
-              <img class="mr-3 creatRoom" src="@/assets/images/chaticon.png" alt="" @click="cardOpen=true">
+              <img class="mr-3" src="@/assets/images/chaticon.png" alt="">
               <img src="@/assets/images/logouticon.png" alt="" @click="leaveHandler">
           </div>
       </header>
       <main class="d-flex align-items-center">
         <div class="container d-flex justify-content-center"> 
           <div class="w-100">
-            <span class="align-items-center mobile-creatRoom">
-              <img class="mr-1 mb-2 creatRoom" src="@/assets/images/chaticon.png" alt="" @click="cardOpen=true">
-               {{!room ? "大廳" : room}}
-            </span>
             <ul class="contentArea weChat-style mb-4" ref="contentArea">
               <li v-for="(content,key) in listContent" :key="key">{{content}}</li>
             </ul>
@@ -28,187 +21,71 @@
           <div class="w-100 d-flex flex-column align-items-center">
             <h3 class="mt-5 mb-1 d-flex align-items-center"> <img class="mr-3" src="@/assets/images/peopleicon.png" alt="">{{usersname.length}}</h3>
             <ul >
-              <li v-for="(name,key) in usersname" :key="key">{{name}}
-                <span v-if="name === user.name">(我)</span>
-              </li>
+              <li v-for="(name,key) in usersname" :key="key">{{name}}</li>
             </ul>
             <h3 class="mt-5 mb-2 d-flex align-items-center"> <img class="mr-3" src="@/assets/images/exiticon.png" alt="">{{options.length}}</h3>
             <ul>
-              <li v-for="(option,key) in options" :key="key" @click="changeRoomHandler(option.value)">
-                {{option.text}}
-                <span v-if="option.value === room">(現在地)</span>
+              <li v-for="(option,key) in options" :key="key">
+                {{option}}
               </li>
             </ul>
           </div>
         </div>
-      </main>
-      <div class="weChatCard" v-show="cardOpen">
-        <div class="text-center weChat-style">
-          <span class="close" @click="()=>cardOpen=false">X</span>
-          <h2 class="text-secondary font-weight-bold">創建房間</h2>
-          <label for=""  class="my-2">
-            <span class="text-secondary font-weight-bold">
-            房名:
-            </span>
-            <input class="my-2 mx-2 weChat-style-input weChat-style" type="text">
-          </label>
-          <button class="btn btn-secondary">創建</button>
+        <!-- <div class="mr-1">     
+            <b-list-group class="contentArea" ref="contentArea">
+            <b-list-group-item  v-for="(content,key) in listContent" :key="key">{{content}}</b-list-group-item>
+            </b-list-group>
+            <b-form-textarea
+                class="txtarea"
+                id="textarea"
+                placeholder="Enter something..."
+                rows="3"
+                v-model.trim="message" 
+                @keyup.enter="messageHandler"
+            ></b-form-textarea>
         </div>
-      </div>
-      <ul class="mobile-menu-list" :class="{active:mobileMenuIsOpen==true}">
-          <li>
-            <div class="d-flex align-items-center justify-content-between">
-              <div class="d-flex align-items-center">
-              <img class="mr-1" src="@/assets/images/peopleicon-w.png" alt="">
-              在線成員
-              </div>
-              <img class="mr-2" v-show="!peopleListOpen" src="@/assets/images/down.png" alt="" @click="()=>peopleListOpen=!peopleListOpen">
-              <img class="mr-2" v-show="peopleListOpen" src="@/assets/images/up.png" alt="" @click="()=>peopleListOpen=!peopleListOpen">
-            </div>
-            <ul v-show="peopleListOpen">
-              <li v-for="(name,key) in usersname" :key="key">{{name}}
-                <span v-if="name === user.name">(我)</span>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <div class="d-flex align-items-center justify-content-between">
-              <div class="d-flex align-items-center">
-              <img class="mr-1" src="@/assets/images/chaticon-w.png" alt="">
-              聊天室
-              </div>
-              <img class="mr-2" v-show="!roomListOpen" src="@/assets/images/down.png" alt="" @click="()=>roomListOpen=!roomListOpen">
-              <img class="mr-2" v-show="roomListOpen" src="@/assets/images/up.png" alt="" @click="()=>roomListOpen=!roomListOpen">
-            </div>
-            <ul v-show="roomListOpen">
-              <li v-for="(option,key) in options" :key="key" @click="changeRoomHandler(option.value)">
-                {{option.text}}
-                <span v-if="option.value === room">(現在地)</span>
-              </li>
-            </ul>
-          </li>
-      </ul>
-      <div class="cover" v-show="mobileMenuIsOpen"></div>
-  </div>    
+        <div>
+          <b-list-group class="mb-3 d-none d-md-block">
+            <b-list-group-item>在此房間人員</b-list-group-item>
+            <b-list-group-item  v-for="(name,key) in usersname" :key="key">{{name}}</b-list-group-item>
+          </b-list-group>
+        </div> -->
+      </main>
+  </div>
 </template>
 <style lang="scss">
 $primary:#E2DDEB;
 $secondary:#8D74B1;
-.cover{
-  position: fixed;
-  left: 0;
-  top: 56px;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.234);
-  z-index: 1;
-}
-.home{
-  position: relative;
-}
-
 header{
   position: relative;
   display: flex;
   justify-content: center;
   line-height: 1.5;
   font-size: 36px;
-  background-color:$primary;
-  border-bottom: 2px solid #ccc;
-  .ham-menu,.menu{
-    position: absolute;
-    height:54px;
-    img{
-      display: inline-block;
-      width: 30px;
-      cursor: pointer;
-    }
-  }
-
-  .ham-menu{
-    left: 30px;
-    display: none;
-    @media (max-width:768px) {
-        display: block;
-    }
-  }
-
   .menu{
+    height:54px;
+    position: absolute;
     right: 30px;
-  }
-
-  .creatRoom{
-    @media (max-width:768px) {
-        display: none !important;
+    img{
+    display: inline-block;
+    width: 30px;
+    cursor: pointer;
     }
   }
 }
 
- .mobile-menu-list{
-    position: absolute;
-    top: 56px;
-    bottom: 0;
-    left: -100%;
-    width: 250px;
-    color:#fff;
-    line-height:2;
-    transition: left 1s;
-    border-right: 1px solid #ccc;
-    background-color:#8D74B1;
-    z-index: 2;
-    &.active{
-      left:0;
-    }
-    >li{
-      >div{
-        background-color: #715696;
-        padding-left: 1rem;
-        height:34px;
-        >img{
-          cursor: pointer;
-        }
-      }
-      text-indent: 2rem;
-      border-bottom: 1px solid #ccc;
-      li:first-child{
-        border-top: 1px solid #ccc;
-      }
-      li{
-        background-color: #9483B8;
-        border-bottom: 1px solid #ccc;
-      }
-      li:last-child{
-        border-bottom: 0px;
-      }
-    }
-  }
-
 main{
-  position: relative;
   background-image: url('~@/assets/images/bg.png');
   background-repeat: no-repeat;
   background-size: cover;
   padding:10px;
   min-height: calc(100vh - 48px);
-  overflow: hidden;
-  .mobile-creatRoom{
-       display: none !important;
-      @media (max-width:768px) {
-        display: flex !important;
-      }
-      .creatRoom{
-        display: inline-block;
-        width: 28px;
-      }
-    }
+
     div > div:first-child{
       max-width: 780px;
     }
     div > div:last-child{
       max-width: 300px;
-      @media (max-width:768px){
-        display: none !important;
-      }
       ul{
         max-height: 160px;
         overflow-y: scroll;
@@ -219,11 +96,6 @@ main{
         li{
         border-bottom: 2px solid rgba($secondary,0.3);
         padding: 10px 0;
-        }
-      }
-      ul:last-child{
-        li{
-          cursor: pointer;
         }
       }
     }
@@ -249,43 +121,19 @@ main{
       }
     }
 }
-
-.weChatCard{
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.234);
-  >div{
-    padding: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform:translate(-50%,-50%);
-  }
-  .close{
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    cursor: pointer;
-  }
-}
 </style>
 <script>
 export default {
   name:'Home',
   data(){
     return {
-      mobileMenuIsOpen:false,
-      roomListOpen:false,
-      peopleListOpen:false,
-      cardOpen:false,
       message:"",
       room:"",
       listContent:[],
       options: [
           { value: "", text: '大廳' },
+          { value: 'a', text: '房間A' },
+          { value: 'b', text: '房間B' },
         ]
     }
   },
@@ -336,9 +184,9 @@ export default {
   },
   mounted(){
   let _this = this
-  if(!this.user.name){
-    this.$router.push('/')
-  }
+  // if(!this.user.name){
+  //   this.$router.push('/')
+  // }
   window.socket = new WebSocket('wss://websockewechat.herokuapp.com/', 'protocol1')
   window.socket.addEventListener('open', function () {
             let data = JSON.stringify({
@@ -375,9 +223,6 @@ export default {
       });
   },
   methods:{
-    changeRoomHandler(room){
-      this.room = room
-    },
     leaveHandler(){
       window.socket.close()
       this.$router.push('/')

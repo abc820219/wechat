@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
+Vue.prototype.gsap = window.gsap
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.config.productionTip = false
